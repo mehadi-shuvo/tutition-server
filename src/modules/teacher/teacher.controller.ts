@@ -1,0 +1,50 @@
+import catchAsync from '../../app/util/catchAsync';
+import { sendResponse } from '../../app/util/sendResponse';
+import { teacherServices } from './teacher.service';
+
+const createTeacher = catchAsync(async (req, res) => {
+  const result = await teacherServices.createTeacherIntoDB(req.body);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Category created successfully 😀',
+    data: result,
+  });
+});
+
+const getAllTeachers = catchAsync(async (req, res) => {
+  const result = await teacherServices.getAllTeachersFromDB();
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Category created successfully 😀',
+    data: result,
+  });
+});
+const getTeacherByID = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const result = await teacherServices.getTeacherByIDFromDB(id);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Category created successfully 😀',
+    data: result,
+  });
+});
+const getOneTeacherByUserId = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const result = await teacherServices.getOneTeacherByUserIdFromDB(id);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'successfully fetched you 😀',
+    data: result,
+  });
+});
+
+export const teacherControllers = {
+  createTeacher,
+  getAllTeachers,
+  getTeacherByID,
+  getOneTeacherByUserId,
+};
