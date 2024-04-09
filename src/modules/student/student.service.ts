@@ -16,12 +16,17 @@ const createStudentIntoDB = async (payload: TStudent) => {
   const result = await Student.create(payload);
   return result;
 };
-const getStudentByID = async (id: string) => {
-  const result = await Student.create(id);
+const getStudentByEmailFromDB = async (email: string) => {
+  const result = await Student.findOne({ email: email });
   return result;
 };
 
+// const getOneStudentFromDB = async(id: string) =>{
+//   const result = await Student.findById(id);
+//   return result
+// }
+
 export const studentServices = {
   createStudentIntoDB,
-  getStudentByID,
+  getStudentByEmailFromDB,
 };

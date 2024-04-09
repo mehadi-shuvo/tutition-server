@@ -5,6 +5,8 @@ import { reviewRoutes } from '../../modules/review/review.route';
 import { userRouter } from '../../modules/user/user.route';
 import { teacherRoutes } from '../../modules/teacher/teacher.route';
 import { studentRoute } from '../../modules/student/student.route';
+import { postRouts } from '../../modules/post/post.route';
+import { districtRoute } from '../../modules/districts/districts.routes';
 
 const router = Router();
 
@@ -32,6 +34,14 @@ const moduleRoutes = [
   {
     path: '/student',
     route: studentRoute,
+  },
+  {
+    path: '/post',
+    route: postRouts,
+  },
+  {
+    path: '/district',
+    route: districtRoute,
   },
 ];
 

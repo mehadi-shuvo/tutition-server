@@ -3,6 +3,7 @@ import AppError from '../../app/errors/AppError';
 import { User } from '../user/user.model';
 import { TTeacher } from './teacher.interface';
 import { Teacher } from './teacher.model';
+import queryBuilderClass from '../../app/builder/queryBuilderClass';
 
 const createTeacherIntoDB = async (payload: TTeacher) => {
   const { email, password } = payload;
@@ -14,11 +15,15 @@ const createTeacherIntoDB = async (payload: TTeacher) => {
     );
   }
   const result = await Teacher.create({ ...payload, userId: user._id });
+
   return result;
 };
 
-const getAllTeachersFromDB = async () => {
-  const result = await Teacher.find();
+const getAllTeachersFromDB = async (queries: Record<string, unknown>) => {
+  const queriesData = new queryBuilderClass(Teacher.find(), queries)
+    .filter()
+    .paginate();
+  const result = await queriesData.modelQuery;
   return result;
 };
 

@@ -13,7 +13,8 @@ const createTeacher = catchAsync(async (req, res) => {
 });
 
 const getAllTeachers = catchAsync(async (req, res) => {
-  const result = await teacherServices.getAllTeachersFromDB();
+  const queries = req.query;
+  const result = await teacherServices.getAllTeachersFromDB(queries);
   sendResponse(res, {
     statusCode: 200,
     success: true,

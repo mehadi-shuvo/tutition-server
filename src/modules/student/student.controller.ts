@@ -12,17 +12,19 @@ const createStudent: RequestHandler = catchAsync(async (req, res) => {
     data: result,
   });
 });
-const getStudentByID: RequestHandler = catchAsync(async (req, res) => {
-  const result = await studentServices.getStudentByID(req.params.id);
+const getStudentByEmail: RequestHandler = catchAsync(async (req, res) => {
+  const result = await studentServices.getStudentByEmailFromDB(
+    req.params.email,
+  );
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: 'You successfully created your student account.😍✌',
+    message: 'successfully fetched.😍✌',
     data: result,
   });
 });
 
 export const studentControllers = {
   createStudent,
-  getStudentByID,
+  getStudentByEmail,
 };

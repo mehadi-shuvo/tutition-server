@@ -1,13 +1,15 @@
 export type TStudent = {
   name: string;
+  schoolOrCollage: string;
   email: string;
-  phone: string;
+  whatsApp: string;
   photo: string;
   password: string;
 };
 export type TStudentSchema = {
   name: string;
+  schoolOrCollage: string;
   email: string;
-  phone: string;
+  whatsApp: string;
   photo: string;
 };

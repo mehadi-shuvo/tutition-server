@@ -6,6 +6,10 @@ const studentSchema = new Schema<TStudentSchema>({
     type: String,
     required: true,
   },
+  schoolOrCollage: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
@@ -15,7 +19,7 @@ const studentSchema = new Schema<TStudentSchema>({
       'Please fill a valid email address',
     ], // Optional email validation
   },
-  phone: {
+  whatsApp: {
     type: String,
     required: true,
   },
