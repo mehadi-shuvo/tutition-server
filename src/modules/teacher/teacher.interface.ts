@@ -11,6 +11,7 @@ export type TTeacher = {
   photo: string;
   studentIDPhoto: string;
   subjects: string[];
+  district: string;
 };
 export type TTeacherSchema = {
   name: string;
@@ -23,4 +24,5 @@ export type TTeacherSchema = {
   studentIDPhoto: string;
   subjects: string[];
   userId: Types.ObjectId;
+  district: string;
 };

@@ -18,6 +18,9 @@ router.post(
   validateRequest(userLoginSchemaValidation),
   userController.loginUser,
 );
+
+router.get('/:id/verify/:token', userController.verifyTokenLink);
+router.post('/verify/email', userController.verifyEmail);
 // router.post(
 //   '/change-password',
 //   auth('user', 'admin'),

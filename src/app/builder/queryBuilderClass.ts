@@ -20,9 +20,14 @@ class queryBuilderClass<T> {
     return this;
   }
 
+  sort() {
+    this.modelQuery = this.modelQuery.sort('-createdAt');
+    return this;
+  }
+
   paginate() {
     const page = Number(this?.query?.page) || 1;
-    const limit = Number(this?.query?.limit) || 2;
+    const limit = Number(this?.query?.limit) || 6;
     const skip = (page - 1) * limit;
 
     this.modelQuery = this.modelQuery.skip(skip).limit(limit);

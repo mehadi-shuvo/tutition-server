@@ -9,13 +9,14 @@ const createPostIntoDB = async (payload: TPost) => {
 const getAllPostsFromDB = async (queries: Record<string, unknown>) => {
   const postsQuery = new queryBuilderClass(Post.find(), queries)
     .filter()
+    .sort()
     .paginate();
   const result = await postsQuery.modelQuery;
   return result;
 };
 
 const getSingleUserPostsFromDB = async (id: string) => {
-  const result = await Post.find({ userId: id });
+  const result = await Post.find({ userId: id }).sort('-createdAt');
   return result;
 };
 const deletePostFromDB = async (id: string) => {

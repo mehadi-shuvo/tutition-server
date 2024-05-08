@@ -3,6 +3,8 @@ import { sendResponse } from '../../app/util/sendResponse';
 import { teacherServices } from './teacher.service';
 
 const createTeacher = catchAsync(async (req, res) => {
+  // console.log(req.body);
+
   const result = await teacherServices.createTeacherIntoDB(req.body);
   sendResponse(res, {
     statusCode: 200,

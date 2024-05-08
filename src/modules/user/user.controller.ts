@@ -4,16 +4,18 @@ import { userServices } from './user.service';
 import { sendResponse } from '../../app/util/sendResponse';
 import config from '../../app/config';
 
-// const createUser = catchAsync(async (req: Request, res: Response) => {
-//   const result = await userServices.createUserIntoDB(req.body);
-//   sendResponse(res, {
-//     data: result,
-//     statusCode: 200,
-//     success: true,
-//     message: 'user created successfully😀',
-//   });
-// });
-
+const verifyTokenLink = catchAsync(async (req: Request, res: Response) => {
+  const result = await userServices.verifyTokenFromDB(
+    req.params.id,
+    req.params.token,
+  );
+  sendResponse(res, {
+    data: result,
+    statusCode: 200,
+    success: true,
+    message: 'user created successfully😀',
+  });
+});
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   const { user, token, refreshToken } = await userServices.loginUserService(
     req.body,
@@ -27,6 +29,17 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
     statusCode: 200,
     success: true,
     message: 'logged in successfully😀',
+  });
+});
+const verifyEmail = catchAsync(async (req: Request, res: Response) => {
+  // console.log(req.body);
+
+  const result = await userServices.verifyEmailFromDB(req.body);
+  sendResponse(res, {
+    data: result,
+    statusCode: 200,
+    success: true,
+    message: 'Email send successfully😀. Please check your email.',
   });
 });
 
@@ -59,5 +72,7 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
 export const userController = {
   // createUser,
   loginUser,
+  verifyTokenLink,
+  verifyEmail,
   // changePassword,
 };
