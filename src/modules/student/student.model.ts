@@ -3,6 +3,10 @@ import { TStudentSchema } from './student.interface';
 
 const studentSchema = new Schema<TStudentSchema>(
   {
+    userId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+    },
     name: {
       type: String,
       required: true,

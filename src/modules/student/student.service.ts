@@ -35,6 +35,7 @@ const createStudentIntoDB = async (payload: TStudent) => {
   }
 
   const url = `${config.base_url}/auth/${user._id}/verify/${token.token}`;
+  console.log(user._id);
   const emailInfo = await sendEmail(user.email, 'Email Verification', url);
   if (emailInfo) {
     await User.findByIdAndDelete(user._id);
@@ -45,7 +46,16 @@ const createStudentIntoDB = async (payload: TStudent) => {
     );
   }
 
-  const result = await Student.create(payload);
+  const studentData = {
+    userId: user._id,
+    name: payload.name,
+    email: payload.email,
+    whatsApp: payload.whatsApp,
+    photo: payload.photo,
+    schoolOrCollage: payload.schoolOrCollage,
+  };
+
+  const result = await Student.create(studentData);
 
   if (!result) {
     await User.findByIdAndDelete(user._id);
@@ -62,11 +72,6 @@ const getStudentByEmailFromDB = async (email: string) => {
   const result = await Student.findOne({ email: email });
   return result;
 };
-
-// const getOneStudentFromDB = async(id: string) =>{
-//   const result = await Student.findById(id);
-//   return result
-// }
 
 export const studentServices = {
   createStudentIntoDB,

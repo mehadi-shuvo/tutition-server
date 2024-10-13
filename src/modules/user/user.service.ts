@@ -44,9 +44,7 @@ const loginUserService = async (payload: TLogin) => {
     role: user?.role,
     email: user.email,
     iat,
-    // exp,
   };
-  //   console.log(user?._id.toString());
 
   const token = createToken(
     tokenPayload,
@@ -58,6 +56,8 @@ const loginUserService = async (payload: TLogin) => {
     config.jwt_refresh_secret as string,
     config.jwt_refresh_exp_in as string,
   );
+  console.log(refreshToken);
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { password, ...userWithoutPassword } = user.toObject();
   return {

@@ -11,9 +11,7 @@ dotenv.config();
 const app: Express = express();
 //parsers
 app.use(express.json());
-app.use(
-  cors({ origin: 'https://tuition-clint.vercel.app', credentials: true }),
-);
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 
 app.use('/api', router);
 

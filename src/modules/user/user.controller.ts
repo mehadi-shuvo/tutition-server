@@ -21,11 +21,11 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
     req.body,
   );
   res.cookie('refreshToken', refreshToken, {
-    secure: config.node_env === 'production',
+    secure: config.node_env === 'development',
     httpOnly: true,
   });
   sendResponse(res, {
-    data: { user, token },
+    data: { user, token, refreshToken },
     statusCode: 200,
     success: true,
     message: 'logged in successfully😀',

@@ -15,11 +15,11 @@ const createTeacherIntoDB = async (payload: TTeacher) => {
     email,
     password,
     role: 'teacher',
-    isVerified: false,
   });
+
   if (!user) {
     throw new AppError(
-      httpStatus.BAD_REQUEST,
+      httpStatus.FORBIDDEN,
       'Failed to create 🤕. Please, Try again!',
     );
   }

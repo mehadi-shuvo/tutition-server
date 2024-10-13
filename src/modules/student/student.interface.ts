@@ -1,3 +1,5 @@
+import { Types } from 'mongoose';
+
 export type TStudent = {
   name: string;
   schoolOrCollage: string;
@@ -12,4 +14,5 @@ export type TStudentSchema = {
   email: string;
   whatsApp: string;
   photo: string;
+  userId: Types.ObjectId;
 };
