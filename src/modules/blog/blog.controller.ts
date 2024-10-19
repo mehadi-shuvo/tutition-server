@@ -47,9 +47,20 @@ const getBlogByID = catchAsync(async (req, res) => {
   });
 });
 
+const updateBlogViews = catchAsync(async (req, res) => {
+  const result = await blogServices.updateBlogViews(req.params.id);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'successfully fetched blogs',
+    data: result,
+  });
+});
+
 export const blogControllers = {
   createBlog,
   getBlogs,
   getUserBlogs,
   getBlogByID,
+  updateBlogViews,
 };

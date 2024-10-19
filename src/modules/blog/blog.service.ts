@@ -92,13 +92,23 @@ const getBlogByID = async (id: string) => {
   return result;
 };
 
-// const updateBlog = async(payload: Partial<TBlog>) =>{
+const updateBlogViews = async (id: string) => {
+  const isBlogExist = await Blog.findByIdAndUpdate(
+    id,
+    { $inc: { views: 1 } },
+    { new: true },
+  );
+  if (!isBlogExist) {
+    throw new AppError(httpStatus.NOT_FOUND, 'blog is not found!');
+  }
 
-// }
+  return isBlogExist;
+};
 
 export const blogServices = {
   createBlog,
   getBlogs,
   getUserBlogs,
   getBlogByID,
+  updateBlogViews,
 };

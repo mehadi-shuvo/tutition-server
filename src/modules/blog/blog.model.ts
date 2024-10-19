@@ -27,6 +27,10 @@ const blogSchema = new Schema<TBlog>(
       type: String,
       required: true,
     },
+    views: {
+      type: Number,
+      default: 0,
+    },
     keyWords: {
       type: [String],
       required: true,

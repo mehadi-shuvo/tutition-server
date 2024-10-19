@@ -8,5 +8,6 @@ export type TBlog = {
   blog: string;
   bannerPhoto: string;
   keyWords: string[];
+  views: number;
   isDeleted: boolean;
 };
