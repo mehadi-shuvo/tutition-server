@@ -3,6 +3,7 @@ import AppError from '../../app/errors/AppError';
 import { Teacher } from '../teacher/teacher.model';
 import { Blog } from './blog.model';
 import { TBlog } from './blog.interface';
+import { Types } from 'mongoose';
 
 const createBlog = async (payload: Partial<TBlog>) => {
   const userData = await Teacher.findById({ _id: payload.userId });
@@ -21,6 +22,7 @@ const createBlog = async (payload: Partial<TBlog>) => {
 
 const getBlogs = async (
   query?: string,
+  excludeId?: string,
   meta?: Partial<{ page: number; limit: number }>,
 ) => {
   const page = meta?.page ? meta.page : 0;
@@ -30,32 +32,56 @@ const getBlogs = async (
   let totalBlogs;
 
   if (query) {
-    totalBlogs = await Blog.countDocuments({
-      isDeleted: false,
-      $or: [
-        { title: { $regex: query, $options: 'i' } },
-        { keyWords: { $in: [new RegExp(query, 'i')] } },
-      ],
-    });
-    blogs = await Blog.find({
-      isDeleted: false,
-      $or: [
-        { title: { $regex: query, $options: 'i' } },
-        { keyWords: { $in: [new RegExp(query, 'i')] } },
-      ],
-    })
-      .skip(page * limit)
-      .limit(limit)
-      .select(
-        'title keyWords photo bannerPhoto userId userName createdAt updatedAt',
-      );
+    if (excludeId) {
+      totalBlogs = await Blog.countDocuments({
+        isDeleted: false,
+        $or: [
+          { title: { $regex: query, $options: 'i' } },
+          { keyWords: { $in: [new RegExp(query, 'i')] } },
+        ],
+        _id: { $ne: new Types.ObjectId(excludeId) },
+      });
+      blogs = await Blog.find({
+        isDeleted: false,
+        $or: [
+          { title: { $regex: query, $options: 'i' } },
+          { keyWords: { $in: [new RegExp(query, 'i')] } },
+        ],
+        _id: { $ne: excludeId },
+      })
+        .skip(page * limit)
+        .limit(limit)
+        .select(
+          'title blog views keyWords photo bannerPhoto userId userName createdAt updatedAt ',
+        );
+    } else {
+      totalBlogs = await Blog.countDocuments({
+        isDeleted: false,
+        $or: [
+          { title: { $regex: query, $options: 'i' } },
+          { keyWords: { $in: [new RegExp(query, 'i')] } },
+        ],
+      });
+      blogs = await Blog.find({
+        isDeleted: false,
+        $or: [
+          { title: { $regex: query, $options: 'i' } },
+          { keyWords: { $in: [new RegExp(query, 'i')] } },
+        ],
+      })
+        .skip(page * limit)
+        .limit(limit)
+        .select(
+          'title blog views keyWords photo bannerPhoto userId userName createdAt updatedAt ',
+        );
+    }
   } else {
     totalBlogs = await Blog.countDocuments({ isDeleted: false });
     blogs = await Blog.find({ isDeleted: false })
       .skip(page * limit)
       .limit(limit)
       .select(
-        'title keyWords photo bannerPhoto userId userName createdAt updatedAt',
+        'title blog views keyWords photo bannerPhoto userId userName createdAt updatedAt',
       );
   }
   const totalPages = Math.ceil(totalBlogs / limit);

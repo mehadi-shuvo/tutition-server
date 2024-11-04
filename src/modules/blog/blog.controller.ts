@@ -14,11 +14,16 @@ const createBlog = catchAsync(async (req, res) => {
 
 const getBlogs = catchAsync(async (req, res) => {
   const query = req.query.searchKey;
+  const blogId = req.query.blogId;
 
-  const result = await blogServices.getBlogs(query as string, {
-    page: Number(req.query.page),
-    limit: Number(req.query.limit),
-  });
+  const result = await blogServices.getBlogs(
+    query as string,
+    blogId as string,
+    {
+      page: Number(req.query.page),
+      limit: Number(req.query.limit),
+    },
+  );
   sendResponse(res, {
     statusCode: 200,
     success: true,
