@@ -106,14 +106,20 @@ const getUserBlogs = async (id: string) => {
 };
 
 const getBlogByID = async (id: string) => {
-  const result = await Blog.findById(id);
-  if (!result) {
+  const isBlogExist = await Blog.findById(id);
+  if (!isBlogExist) {
     throw new AppError(
       httpStatus.NOT_FOUND,
       'Not found',
       'The blog you locking for that is not our database!',
     );
   }
+
+  const result = await Blog.findByIdAndUpdate(
+    id,
+    { $inc: { views: 1 } },
+    { new: true },
+  );
 
   return result;
 };
