@@ -45,9 +45,21 @@ const getOneTeacherByUserId = catchAsync(async (req, res) => {
   });
 });
 
+const updateTeacher = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await teacherServices.updateTeacherIntoDB(id, req.body);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'successfully updated.😍✌',
+    data: result,
+  });
+});
+
 export const teacherControllers = {
   createTeacher,
   getAllTeachers,
   getTeacherByID,
   getOneTeacherByUserId,
+  updateTeacher,
 };

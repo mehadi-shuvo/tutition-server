@@ -6,7 +6,7 @@ export type TStudent = {
   email: string;
   whatsApp: string;
   photo: string;
-  password: string;
+  password?: string;
 };
 export type TStudentSchema = {
   name: string;

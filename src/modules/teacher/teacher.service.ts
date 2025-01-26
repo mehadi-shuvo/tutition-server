@@ -84,9 +84,32 @@ const getOneTeacherByUserIdFromDB = async (id: string) => {
   return result;
 };
 
+const updateTeacherIntoDB = async (
+  id: string,
+  payload: Record<string, TTeacher>,
+) => {
+  const { email, password } = payload;
+  if (email || password) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'Email and Password can not be updated 🤕. Please, Try again!',
+    );
+  }
+
+  const result = await Teacher.findByIdAndUpdate(id, payload, { new: true });
+  if (!result) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'Failed to update 🤕. Please, Try again!',
+    );
+  }
+  return result;
+};
+
 export const teacherServices = {
   createTeacherIntoDB,
   getAllTeachersFromDB,
   getTeacherByIDFromDB,
   getOneTeacherByUserIdFromDB,
+  updateTeacherIntoDB,
 };
