@@ -49,6 +49,7 @@ const getBlogs = async (
         ],
         _id: { $ne: excludeId },
       })
+        .sort({ createdAt: -1 })
         .skip(page * limit)
         .limit(limit)
         .select(
@@ -101,7 +102,10 @@ const getBlogs = async (
 
 // get all blogs of the specific one user;
 const getUserBlogs = async (id: string) => {
-  const result = await Blog.find({ userId: id }).sort({ createdAt: -1 });
+  const result = await Blog.find({ userId: id, isDeleted: false }).sort({
+    createdAt: -1,
+  });
+
   return result;
 };
 
@@ -137,10 +141,20 @@ const updateBlogViews = async (id: string) => {
   return isBlogExist;
 };
 
+const deleteBlog = async (id: string) => {
+  const isBlogExist = await Blog.findById(id);
+  if (!isBlogExist) {
+    throw new AppError(httpStatus.NOT_FOUND, 'blog is not found!');
+  }
+  const result = await Blog.findByIdAndUpdate(id, { isDeleted: true });
+  return result;
+};
+
 export const blogServices = {
   createBlog,
   getBlogs,
   getUserBlogs,
   getBlogByID,
   updateBlogViews,
+  deleteBlog,
 };

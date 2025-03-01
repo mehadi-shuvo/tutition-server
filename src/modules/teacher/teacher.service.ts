@@ -81,6 +81,12 @@ const getTeacherByIDFromDB = async (id: string) => {
 
 const getOneTeacherByUserIdFromDB = async (id: string) => {
   const result = await Teacher.findOne({ userId: id });
+  if (!result) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'Teacher not found 🤕. Please, Try again!',
+    );
+  }
   return result;
 };
 
