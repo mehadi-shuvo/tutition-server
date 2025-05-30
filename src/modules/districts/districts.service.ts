@@ -1,8 +1,11 @@
 import { District } from './districts.model';
 
 const getThannasFromDB = async (dis: string) => {
-  const district = dis.toLowerCase();
-  const result = await District.findOne({ district });
+  const result = await District.findOne({ district: dis }).collation({
+    locale: 'en',
+    strength: 2,
+  });
+
   if (!result) {
     return null;
   }

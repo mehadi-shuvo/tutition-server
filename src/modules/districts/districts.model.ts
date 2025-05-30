@@ -6,6 +6,7 @@ const DistrictSchema = new Schema<TDistrict>({
     type: String,
     required: true,
     trim: true,
+    index: true,
   },
   thanas: [
     {
@@ -15,5 +16,12 @@ const DistrictSchema = new Schema<TDistrict>({
     },
   ],
 });
+
+DistrictSchema.index(
+  { district: 1 },
+  {
+    collation: { locale: 'en', strength: 2 },
+  },
+);
 
 export const District = model('districts', DistrictSchema);
