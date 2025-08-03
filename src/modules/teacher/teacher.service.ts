@@ -38,7 +38,7 @@ const createTeacherIntoDB = async (payload: TTeacher) => {
   }
 
   const url = `${config.base_url}/auth/${user._id}/verify/${token.token}`;
-  const emailInfo = await sendEmail(user.email, 'Email Verification', url);
+  const emailInfo = await sendEmail(email, 'Email Verification', url);
   if (emailInfo) {
     await User.findByIdAndDelete(user._id);
     await VerifiedToken.findByIdAndDelete(token._id);

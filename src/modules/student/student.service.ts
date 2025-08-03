@@ -42,7 +42,7 @@ const createStudentIntoDB = async (payload: TStudent) => {
   // Step 3: Send Email
   const verificationUrl = `${config.base_url}/auth/${user._id}/verify/${token.token}`;
   try {
-    await sendEmail(user.email, 'Email Verification', verificationUrl);
+    await sendEmail(email, 'Email Verification', verificationUrl);
   } catch (error) {
     // Rollback on email failure
     await User.findByIdAndDelete(user._id);
